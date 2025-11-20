@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# Startup script for aetting up AP and video stream forwarding
+# on the OpenIPC NVR GS unit.
+
+case "$1" in
+	start)
+	        # Adding ip address to wlan1 interface
+        	/sbin/ip addr add 10.0.2.1/24 dev wlan1
+	
+        	# Starting dhcpd daemon
+        	/usr/sbin/udhcpd -S /etc/udhcpd.conf
+
+        	# Starting Access Point
+        	/usr/sbin/hostapd -s -B /etc/hostapd.conf
+
+        	# Starting wfb-ng forwarding to GCS
+        	/usr/bin/wfb_rx -c 10.0.2.10 -u 5600 -p 0 -K /etc/gs.key -i 7669206 wlan0
+		;;
+
+	stop)
+		;;
+
+	*)
+		echo "Usage: $0 {start|stop}"
+		exit 1
+		;;
+esac
+
+exit $?
+
