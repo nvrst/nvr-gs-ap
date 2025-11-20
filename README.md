@@ -10,5 +10,4 @@
 6. Enable udp video stream in QGroundControl
 
 ## Current issues
-- USB network interfaces names are assigned randomly to cards
-- Both connections are on 5G
+
